@@ -5,7 +5,7 @@ const SECRET = process.env.JWT_SECRET || 'dev-secret-change-me';
 // Creates a token for the user and save it in a cookie
 function setToken(res, user) {
     const token = jwt.sign(
-        {id: user.id, username: user.username, role: user.role },
+        {id: user.id, firstName: user.firstName, role: user.role },
         SECRET,
         { expiresIn: '8h'}
     );
