@@ -1,8 +1,16 @@
+const fs = require('fs');
+const path = require('path');
+const envFile = path.join(__dirname, '.env');
+if (fs.existsSync(envFile)) {
+    process.loadEnvFile(envFile);
+}
+
 const express = require('express');
 const helmet = require('helmet');
 const { engine } = require('express-handlebars');
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 const pool = require('./db');
 const { attachUser, setToken, requireRole } = require('./middleware/auth');
 const app = express();
@@ -252,4 +260,3 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Running at http://localhost:${PORT}`));
-
