@@ -1,0 +1,12 @@
+<header>
+    <a href="/">Search n' Go</a>
+    <nav>
+        {{#if user}}
+            <span>Hi, {{user.username}}</span>
+            <form action="/logout" method="post"><button>Log out</button></form>
+        {{else}}
+            <a href="/login">Log in</a>
+            <a href="/register">Create account</a>
+        {{/if}}
+    </nav>
+</header>
