@@ -27,6 +27,7 @@ app.use(attachUser);
 
 // Routes
 app.get('/', (req, res) => res.render('home'));
+app.use(require('./routes/auth'));
 
 // Page not found
 app.use((req, res) => {
@@ -34,7 +35,7 @@ app.use((req, res) => {
 });
 
 // Server error
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
     console.error(err);
     res.status(500).render('error', { message: 'Something went wrong on the server.' });
 });
