@@ -1,0 +1,26 @@
+<h1>Create account</h1>
+
+{{#if error}}
+    <p role="alert">{{error}}</p>
+{{/if}}
+
+<form action="/register" method="post">
+    <label for="firstName">First name</label>
+    <input type="text" id="firstName" name="firstName" value="{{firstName}}" maxlength="50" autocomplete="given-name" required>
+
+    <label for="lastName">Last name</label>
+    <input type="text" id="lastName" name="lastName" value="{{lastName}}" maxlength="50" autocomplete="family-name" required>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" value="{{email}}" maxlength="100" autocomplete="email" required>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" minlength="8" autocomplete="new-password" required>
+
+    <label for="confirmPassword">Confirm password</label>
+    <input type="password" id="confirmPassword" name="confirmPassword" minlength="8" autocomplete="new-password" required>
+
+    <button type="submit">Create account</button>
+</form>
+
+<p>Already have an account? <a href="/login">Log in</a></p>
