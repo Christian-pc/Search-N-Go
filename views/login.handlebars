@@ -1,0 +1,18 @@
+<h1>Log in</h1>
+
+{{#if error}}
+    <p role="alert">{{error}}</p>
+{{/if}}
+
+<form action="/login" method="post">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" value="{{email}}" maxlength="100" autocomplete="email" required>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" autocomplete="current-password" required>
+
+    <button type="submit">Log in</button>
+</form>
+
+<p>Don't have an account? <a href="/register">Create one</a></p>
+<p><a href="/">Continue as guest</a></p>

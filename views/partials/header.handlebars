@@ -2,7 +2,7 @@
     <a href="/">Search n' Go</a>
     <nav>
         {{#if user}}
-            <span>Hi, {{user.username}}</span>
+            <span>Hi, {{user.firstName}}</span>
             <form action="/logout" method="post"><button>Log out</button></form>
         {{else}}
             <a href="/login">Log in</a>
