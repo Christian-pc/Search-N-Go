@@ -1,0 +1,9 @@
+<article class="product-card">
+    <div class="product-image">No image</div>
+    <div class="product-info">
+        <p class="product-brand">{{BrandName}}</p>
+        <h3><a href="/product/{{ProductId}}">{{ProductName}}</a></h3>
+        <p class="product-price">{{formatPrice Price}}</p>
+        <p class="stock {{#unless QuantityAvailable}}out{{/unless}}">{{stockText QuantityAvailable}}</p>
+    </div>
+</article>

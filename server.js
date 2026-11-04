@@ -27,7 +27,29 @@ app.use(cookieParser());
 app.use(attachUser);
 
 // Routes
-app.get('/', (req, res) => res.render('home'));
+// app.get('/', (req, res) => res.render('home'));
+
+// ***************************************************************************************************************************************************************
+// temp data:
+// replace this with a db.query() on the Products + Inventory tables.
+const tempData = [
+    { ProductId: 1, ProductCode: 'MLK-001', ProductName: 'Whole Milk 2L', BrandName: 'Dairyland', Price: 4.99, QuantityAvailable: 24 },
+    { ProductId: 2, ProductCode: 'BRD-014', ProductName: 'Whole Wheat Bread', BrandName: 'Sunrise Bakery', Price: 3.49, QuantityAvailable: 3 },
+    { ProductId: 3, ProductCode: 'EGG-112', ProductName: 'Large Eggs (12)', BrandName: 'Prairie Farms', Price: 5.29, QuantityAvailable: 0 },
+    { ProductId: 4, ProductCode: 'CHS-220', ProductName: 'Old Cheddar Cheese', BrandName: 'Dairyland', Price: 7.99, QuantityAvailable: 12 }
+];
+
+app.get('/', (req, res) => {
+    const q = (req.query.q || '').trim();
+    const products = q
+        ? tempData.filter(p =>
+            p.ProductName.toLowerCase().includes(q.toLowerCase()) ||
+            p.ProductCode.toLowerCase() === q.toLowerCase())
+        : [];
+    res.render('home', { q, searched: q !== '', products });
+});
+// ***************************************************************************************************************************************************************
+
 app.get('/login', (req, res) => res.render('login'));
 app.get('/register', (req, res) => res.render('register'));
 app.use(require('./routes/auth'));

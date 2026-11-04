@@ -2,7 +2,22 @@
     <h1>Search N' Go</h1>
     <p>Check price and availability in store.</p>
     <form class="search-form" action="/" method="get">
-        <input type="search" name="q" placeholder="Product name or code" aria-label="Search products">
+        <input type="search" name="q" value="{{q}}" placeholder="Product name or code" aria-label="Search products">
         <button>Search</button>
     </form>
 </section>
+
+{{#if searched}}
+    <section class="results">
+        <h2>{{products.length}} result(s) for "{{q}}"</h2>
+        {{#if products.length}}
+            <div class="product-grid">
+                {{#each products}}
+                    {{> productCard}}
+                {{/each}}
+            </div>
+        {{else}}
+            <p class="empty">No products found. Try a different name or code.</p>
+        {{/if}}
+    </section>
+{{/if}}
