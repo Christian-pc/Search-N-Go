@@ -1,0 +1,99 @@
+:root {
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --border: #d1d5db;
+    --danger-bg: #fee2e2;
+    --danger-text: #991b1b;
+    --radius: 8px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+a { color: var(--primary); }
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+}
+
+header > a {
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--text);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+nav form { margin: 0; }
+
+/* Page container */
+main {
+    max-width: 960px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Forms */
+form label {
+    display: block;
+    margin: 1rem 0 0.25rem;
+    font-weight: 600;
+}
+
+form input {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 1rem;
+}
+
+form input:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 1px;
+}
+
+/* Buttons */
+button {
+    padding: 0.6rem 1.1rem;
+    border: none;
+    border-radius: var(--radius);
+    background: var(--primary);
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+button:hover { background: var(--primary-dark); }
+
+form button[type="submit"] { margin-top: 1.25rem; }
+
+/* Error message */
+[role="alert"] {
+    padding: 0.75rem 1rem;
+    background: var(--danger-bg);
+    color: var(--danger-text);
+    border-radius: var(--radius);
+}
