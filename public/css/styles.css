@@ -97,3 +97,47 @@ form button[type="submit"] { margin-top: 1.25rem; }
     color: var(--danger-text);
     border-radius: var(--radius);
 }
+
+
+/* Auth cards (login and register) */
+.card {
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.card h1 {
+    margin-top: 0;
+    text-align: center;
+}
+
+.card form button[type="submit"] { width: 100%; }
+
+.card p { text-align: center; }
+
+/* Home page search */
+.hero {
+    max-width: 640px;
+    margin: 4rem auto;
+    text-align: center;
+}
+
+.hero h1 { font-size: 2.25rem; margin-bottom: 0.25rem; }
+
+.hero p { color: var(--muted); margin-top: 0; }
+
+.search-form {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+.search-form input {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    font-size: 1.05rem;
+}
