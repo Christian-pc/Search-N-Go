@@ -235,3 +235,76 @@ home page
 .empty {
     color: var(--muted);
 }
+
+/* Product details page */
+.product-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+}
+
+.product-detail-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 280px;
+    background: #e5e7eb;
+    border-radius: var(--radius);
+    color: var(--muted);
+}
+
+.product-detail-info h1 {
+    margin: 0.25rem 0;
+}
+
+.product-code {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin: 0 0 1rem;
+}
+
+.product-detail-price {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0 0 0.25rem;
+}
+
+.reviews {
+    margin-top: 2rem;
+}
+
+.avg-rating {
+    color: var(--muted);
+}
+
+.review {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.9rem 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.review p {
+    margin: 0.2rem 0;
+}
+
+.review-stars {
+    color: #f59e0b;
+    letter-spacing: 0.1em;
+}
+
+.review-meta {
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+@media (max-width: 640px) {
+    .product-detail {
+        grid-template-columns: 1fr;
+    }
+}

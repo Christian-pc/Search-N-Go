@@ -1,0 +1,30 @@
+<p><a href="/">&larr; Back to search</a></p>
+
+<article class="product-detail">
+    <div class="product-detail-image">No image</div>
+
+    <div class="product-detail-info">
+        <p class="product-brand">{{product.BrandName}} &middot; {{product.CategoryName}}</p>
+        <h1>{{product.ProductName}}</h1>
+        <p class="product-code">Product code: {{product.ProductCode}}</p>
+        <p class="product-detail-price">{{formatPrice product.Price}}</p>
+        <p class="stock {{#unless product.QuantityAvailable}}out{{/unless}}">{{stockText product.QuantityAvailable}}</p>
+        <p>{{product.Description}}</p>
+    </div>
+</article>
+
+<section class="reviews">
+    <h2>Reviews</h2>
+    {{#if avgRating}}
+        <p class="avg-rating">{{avgRating}} / 5 average from {{reviews.length}} review(s)</p>
+        {{#each reviews}}
+            <div class="review">
+                <p class="review-stars">{{stars Rating}}</p>
+                <p>{{ReviewText}}</p>
+                <p class="review-meta">{{FirstName}} &middot; {{ReviewDate}}</p>
+            </div>
+        {{/each}}
+    {{else}}
+        <p class="empty">No reviews yet.</p>
+    {{/if}}
+</section>

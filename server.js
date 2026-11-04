@@ -12,7 +12,8 @@ app.engine( 'handlebars', engine({
     helpers: {
         formatPrice: price => `$${Number(price).toFixed(2)}`,
         stockText: qty => (qty === 0 ? 'Out of stock' : qty < 5 ? `Only ${qty} left` : `In stock (${qty})`),
-        eq: (a, b) => String(a) === String(b)
+        eq: (a, b) => String(a) === String(b),
+        stars: n => '★'.repeat(n) + '☆'.repeat(5 - n)
     }
 }));
 
@@ -39,6 +40,12 @@ const tempData = [
     { ProductId: 4, ProductCode: 'CHS-220', ProductName: 'Old Cheddar Cheese', BrandName: 'Dairyland', Price: 7.99, QuantityAvailable: 12 }
 ];
 
+const tempReviews = [
+    { ProductId: 1, FirstName: 'Sam', Rating: 5, ReviewText: 'Always fresh and a good price.', ReviewDate: '2026-10-02' },
+    { ProductId: 1, FirstName: 'Priya', Rating: 4, ReviewText: 'Good milk, wish it came in bigger sizes.', ReviewDate: '2026-10-15' },
+    { ProductId: 2, FirstName: 'Alex', Rating: 3, ReviewText: 'Tasty but it runs out fast.', ReviewDate: '2026-10-20' }
+];
+
 app.get('/', (req, res) => {
     const q = (req.query.q || '').trim();
     const products = q
@@ -47,6 +54,18 @@ app.get('/', (req, res) => {
             p.ProductCode.toLowerCase() === q.toLowerCase())
         : [];
     res.render('home', { q, searched: q !== '', products });
+});
+
+app.get('/product/:id', (req, res) => {
+    const product = tempData.find(p => p.ProductId === Number(req.params.id));
+    if (!product) {
+        return res.status(404).render('error', { message: 'Product not found.' });
+    }
+    const reviews = tempReviews.filter(r => r.ProductId === product.ProductId);
+    const avgRating = reviews.length
+        ? (reviews.reduce((sum, r) => sum + r.Rating, 0) / reviews.length).toFixed(1)
+        : null;
+    res.render('product', { product, reviews, avgRating });
 });
 // ***************************************************************************************************************************************************************
 
