@@ -1,0 +1,21 @@
+<h1>Your profile</h1>
+<p>Name: {{user.firstName}}</p>
+<p>Role: {{user.role}}</p>
+
+<h2>Products</h2>
+{{#if products.length}}
+    <ul>
+        {{#each products}}
+            <li>
+                {{#if imageUrl}}<img src="{{imageUrl}}" alt="{{name}}" width="120">{{/if}}
+                <h3>{{name}}</h3>
+                <p>Code: {{code}}</p>
+                <p>Brand: {{brand}} | Category: {{category}}</p>
+                {{#if description}}<p>{{description}}</p>{{/if}}
+                <p>{{formatPrice price}} | {{stockText quantity}}</p>
+            </li>
+        {{/each}}
+    </ul>
+{{else}}
+    <p>No products are available yet.</p>
+{{/if}}

@@ -1,0 +1,44 @@
+<h1>Manage products</h1>
+<p><a href="/admin/products/new">Add product</a></p>
+
+{{#if message}}
+    <p role="status">{{message}}</p>
+{{/if}}
+
+{{#if products.length}}
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Code</th>
+                <th scope="col">Product</th>
+                <th scope="col">Brand</th>
+                <th scope="col">Category</th>
+                <th scope="col">Price</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each products}}
+                <tr>
+                    <td>{{code}}</td>
+                    <td>{{name}}</td>
+                    <td>{{brand}}</td>
+                    <td>{{category}}</td>
+                    <td>{{formatPrice price}}</td>
+                    <td>{{quantity}}</td>
+                    <td>
+                        <a href="/admin/products/{{id}}/edit">Edit</a>
+                        <form action="/admin/products/{{id}}/delete" method="post">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+{{else}}
+    <p>No products yet.</p>
+{{/if}}
+
+<p><a href="/admin">Back to dashboard</a></p>
