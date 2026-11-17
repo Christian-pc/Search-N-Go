@@ -68,12 +68,6 @@ app.get('/product/:id', (req, res) => {
     res.render('product', { product, reviews, avgRating });
 });
 
-// TEMP: dev-only shortcut to act as a store account. DELETE BEFORE MERGING.
-app.get('/dev/login-store', (req, res) => {
-    setToken(res, { id: 1, firstName: 'Store', role: 'store' });
-    res.redirect('/admin');
-});
-
 // Store dashboard (store accounts only)
 app.get('/admin', requireRole('store'), (req, res) => {
     res.render('admin', { products: tempData });
