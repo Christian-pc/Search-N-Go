@@ -2,7 +2,7 @@ const express = require('express');
 const helmet = require('helmet');
 const { engine } = require('express-handlebars');
 const cookieParser = require('cookie-parser');
-const { attachUser } = require('./middleware/auth');
+const { attachUser, setToken, requireRole } = require('./middleware/auth');
 
 const app = express();
 
@@ -34,10 +34,10 @@ app.use(attachUser);
 // temp data:
 // replace this with a db.query() on the Products + Inventory tables.
 const tempData = [
-    { ProductId: 1, ProductCode: 'MLK-001', ProductName: 'Whole Milk 2L', BrandName: 'Dairyland', Price: 4.99, QuantityAvailable: 24 },
-    { ProductId: 2, ProductCode: 'BRD-014', ProductName: 'Whole Wheat Bread', BrandName: 'Sunrise Bakery', Price: 3.49, QuantityAvailable: 3 },
-    { ProductId: 3, ProductCode: 'EGG-112', ProductName: 'Large Eggs (12)', BrandName: 'Prairie Farms', Price: 5.29, QuantityAvailable: 0 },
-    { ProductId: 4, ProductCode: 'CHS-220', ProductName: 'Old Cheddar Cheese', BrandName: 'Dairyland', Price: 7.99, QuantityAvailable: 12 }
+    { ProductId: 1, ProductCode: 'MLK-001', ProductName: 'Whole Milk 2L', BrandName: 'Dairyland', Description: 'Fresh homogenized whole milk in a 2 litre carton.', CategoryName: 'Dairy', Price: 4.99, QuantityAvailable: 24 },
+    { ProductId: 2, ProductCode: 'BRD-014', ProductName: 'Whole Wheat Bread', BrandName: 'Sunrise Bakery', Description: 'Soft sliced whole wheat bread, baked fresh daily.', CategoryName: 'Bakery', Price: 3.49, QuantityAvailable: 3 },
+    { ProductId: 3, ProductCode: 'EGG-112', ProductName: 'Large Eggs (12)', BrandName: 'Prairie Farms', Description: 'One dozen large Grade A eggs.', CategoryName: 'Dairy', Price: 5.29, QuantityAvailable: 0 },
+    { ProductId: 4, ProductCode: 'CHS-220', ProductName: 'Old Cheddar Cheese', BrandName: 'Dairyland', Description: 'Aged old cheddar, 400 g block.', CategoryName: 'Dairy', Price: 7.99, QuantityAvailable: 12 }
 ];
 
 const tempReviews = [
@@ -67,6 +67,18 @@ app.get('/product/:id', (req, res) => {
         : null;
     res.render('product', { product, reviews, avgRating });
 });
+
+// TEMP: dev-only shortcut to act as a store account. DELETE BEFORE MERGING.
+app.get('/dev/login-store', (req, res) => {
+    setToken(res, { id: 1, firstName: 'Store', role: 'store' });
+    res.redirect('/admin');
+});
+
+// Store dashboard (store accounts only)
+app.get('/admin', requireRole('store'), (req, res) => {
+    res.render('admin', { products: tempData });
+});
+
 // ***************************************************************************************************************************************************************
 
 app.get('/login', (req, res) => res.render('login'));

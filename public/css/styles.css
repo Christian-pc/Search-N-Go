@@ -308,3 +308,57 @@ home page
         grid-template-columns: 1fr;
     }
 }
+
+/* Store admin */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.admin-header h1 {
+    margin: 0;
+}
+
+.button-link {
+    display: inline-block;
+    padding: 0.6rem 1.1rem;
+    border-radius: var(--radius);
+    background: var(--primary);
+    color: #fff;
+    text-decoration: none;
+}
+
+.button-link:hover {
+    background: var(--primary-dark);
+}
+
+.table-wrap {
+    overflow-x: auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th, .admin-table td {
+    padding: 0.7rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.admin-table th {
+    background: #f3f4f6;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--muted);
+}
+
+.admin-table tbody tr:last-child td { border-bottom: none; }

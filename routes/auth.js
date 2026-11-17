@@ -40,7 +40,7 @@ router.get('/register', redirectIfLoggedIn, (req, res) => {
 
 
 // Log out by deleting the token cookie
-router.post('/logout', (res, req) => {
+router.post('/logout', (req, res) => {
     res.clearCookie('token');
     res.redirect('/');
 });
