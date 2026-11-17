@@ -2,6 +2,7 @@
     <a href="/">Search n' Go</a>
     <nav>
         {{#if user}}
+            {{#if (eq user.role 'store')}}<a href="/admin">Manage products</a>{{/if}}
             <span>Hi, {{user.firstName}}</span>
             <form action="/logout" method="post"><button>Log out</button></form>
         {{else}}
