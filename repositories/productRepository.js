@@ -16,6 +16,32 @@ async function findAll() {
     return rows;
 }
 
+async function search({ term = '', categoryId = null } = {}) {
+    const conditions = [];
+    const params = [];
+
+    if (term) {
+        conditions.push('p.ProductName LIKE ?');
+        params.push(`${term}%`);
+    }
+    if (categoryId !== null) {
+        conditions.push('p.CategoryId = ?');
+        params.push(categoryId);
+    }
+
+    const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
+    const [rows] = await pool.execute(
+        `SELECT ${PRODUCT_COLUMNS}, c.CategoryName AS category
+         FROM Products p
+         JOIN Categories c ON c.CategoryId = p.CategoryId
+         LEFT JOIN Inventory i ON i.ProductId = p.ProductId
+         ${where}
+         ORDER BY p.ProductId DESC`,
+        params
+    );
+    return rows;
+}
+
 async function findById(id) {
     const [rows] = await pool.execute(
         `SELECT ${PRODUCT_COLUMNS}
@@ -32,6 +58,13 @@ async function findCategories() {
         'SELECT CategoryId AS id, CategoryName AS name FROM Categories ORDER BY CategoryName'
     );
     return rows;
+}
+
+async function saveSearch(userId, term) {
+    await pool.execute(
+        'INSERT INTO SearchHistory (UserId, SearchTerm) VALUES (?, ?)',
+        [userId, term]
+    );
 }
 
 // Products and Inventory are separate tables, so write both or neither
@@ -54,18 +87,30 @@ async function inTransaction(work) {
 async function create(p) {
     return inTransaction(async conn => {
         const [result] = await conn.execute(
-            `INSERT INTO Products (ProductCode, ProductName, BrandName, Description, Price, ImageUrl, CategoryId)
+            `INSERT INTO Products
+            (ProductCode, ProductName, BrandName, Description,
+             Price, ImageUrl, CategoryId)
              VALUES (?, ?, ?, ?, ?, ?, ?)`,
-            [p.code, p.name, p.brand, p.description || null,
-             Number(p.price), p.imageUrl || null, Number(p.categoryId)]
+            [
+                p.code,
+                p.name,
+                p.brand,
+                p.description || null,
+                Number(p.price),
+                p.imageUrl || null,
+                Number(p.categoryId)
+            ]
         );
+
         await conn.execute(
             'INSERT INTO Inventory (ProductId, QuantityAvailable) VALUES (?, ?)',
             [result.insertId, Number(p.quantity)]
         );
+
         return result.insertId;
     });
 }
+
 
 async function update(id, p) {
     return inTransaction(async conn => {
@@ -95,6 +140,14 @@ async function createCategory(name) {
     return result.insertId;
 }
 
-module.exports = { findAll, findById, findCategories, createCategory, create, update, remove };
-
-
+module.exports = {
+    findAll,
+    search,
+    findById,
+    findCategories,
+    saveSearch,
+    createCategory,
+    create,
+    update,
+    remove
+};

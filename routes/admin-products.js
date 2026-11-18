@@ -1,8 +1,21 @@
 const express = require('express');
 const productRepo = require('../repositories/productRepository');
+const upload = require('../middleware/upload');
 
 const router = express.Router();
 const wrap = fn => (req, res, next) => fn(req, res, next).catch(next);
+const uploadImage = (req, res, next) => {
+    upload.single('image')(req, res, err => {
+        if (!err) return next();
+        if (err.code === 'LIMIT_FILE_SIZE') {
+            return res.status(400).render('error', { message: 'Images must be 5 MB or smaller.' });
+        }
+        if (err.message === 'Only JPG, PNG, and WEBP images are allowed.') {
+            return res.status(400).render('error', { message: err.message });
+        }
+        return next(err);
+    });
+};
 
 const messages = { created: 'Product added.', updated: 'Product updated.', deleted: 'Product deleted.' };
 const notFound = res => res.status(404).render('error', { message: 'Product not found.' });
@@ -12,7 +25,7 @@ router.param('id', (req, res, next, value) => {
     next();
 });
 
-function readForm(body) {
+function readForm(body, imageUrl = null) {
     const text = field => typeof body[field] === 'string' ? body[field].trim() : '';
     const product = {
         code: text('code'),
@@ -20,7 +33,7 @@ function readForm(body) {
         brand: text('brand'),
         description: text('description'),
         price: text('price'),
-        imageUrl: text('imageUrl'),
+        imageUrl,
         categoryId: text('categoryId'),
         quantity: text('quantity')
     };
@@ -40,9 +53,6 @@ function readForm(body) {
     if (product.price === '' || !/^\d+(?:\.\d{1,2})?$/.test(product.price) ||
         Number(product.price) > 99999999.99) {
         return { product, error: 'Enter a valid price with no more than two decimal places.' };
-    }
-    if (product.imageUrl.length > 255) {
-        return { product, error: 'The image URL must be 255 characters or fewer.' };
     }
     if (!/^[1-9]\d*$/.test(product.categoryId)) {
         return { product, error: 'Select a valid category.' };
@@ -86,20 +96,37 @@ router.get('/new', wrap((req, res) =>
     showForm(res, 200, { product: { quantity: 0 }, formTitle: 'Add product', action: '/admin/products' })
 ));
 
-router.post('/', wrap(async (req, res) => {
-    const { product, error } = readForm(req.body);
-    const page = { product, formTitle: 'Add product', action: '/admin/products' };
-    if (error) return showForm(res, 400, { ...page, error });
+
+
+router.post('/', uploadImage, wrap(async (req, res) => {
+    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+    const { product, error } = readForm(req.body, imageUrl);
+
+    const page = {
+        product,
+        formTitle: 'Add product',
+        action: '/admin/products'
+    };
+
+    if (error) {
+        return showForm(res, 400, { ...page, error });
+    }
 
     try {
         await productRepo.create(product);
     } catch (err) {
         const message = friendlyError(err);
-        if (message) return showForm(res, 400, { ...page, error: message });
+
+        if (message) {
+            return showForm(res, 400, { ...page, error: message });
+        }
+
         throw err;
     }
+
     res.redirect('/admin/products?success=created');
 }));
+
 
 
 
@@ -112,11 +139,13 @@ router.get('/:id/edit', wrap(async (req, res) => {
     return showForm(res, 200, { product, formTitle: 'Edit product', action: `/admin/products/${product.id}/edit` });
 }));
 
-router.post('/:id/edit', wrap(async (req, res) => {
+router.post('/:id/edit', uploadImage, wrap(async (req, res) => {
     const id = Number(req.params.id);
-    if (!(await productRepo.findById(id))) return notFound(res);
+    const existingProduct = await productRepo.findById(id);
+    if (!existingProduct) return notFound(res);
 
-    const { product, error } = readForm(req.body);
+    const imageUrl = req.file ? `/uploads/${req.file.filename}` : existingProduct.imageUrl;
+    const { product, error } = readForm(req.body, imageUrl);
     product.id = id;
     const page = { product, formTitle: 'Edit product', action: `/admin/products/${id}/edit` };
     if (error) return showForm(res, 400, { ...page, error });

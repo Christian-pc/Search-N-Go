@@ -38,7 +38,7 @@
     </div>
 
    
-    <form action="/products" method="GET" class="product-search">
+    <form action="/products" method="GET" class="product-search" data-live-search>
 
         <div class="search-input">
             <i class="bi bi-search"></i>
@@ -46,7 +46,7 @@
                 type="search"
                 name="q"
                 value="{{term}}"
-                placeholder="Search by product name, brand or code..."
+                placeholder="Search by product name..."
                 aria-label="Search products">
         </div>
 
@@ -64,8 +64,6 @@
             </select>
         </div>
 
-       
-
     </form>
 
   
@@ -73,9 +71,10 @@
 
         <div class="product-section-heading">
             <h2>Our Products</h2>
-            <span>{{products.length}} products</span>
+            <span data-product-count>{{products.length}} products</span>
         </div>
 
+        <div data-product-list aria-live="polite">
         {{#if products.length}}
 
             <div class="product-grid">
@@ -96,31 +95,31 @@
                         </div>
 
                         <div class="product-details">
+                                <h3>Name: {{name}}</h3>
 
-                            <p class="product-brand">{{brand}}</p>
+                            <p class="product-brand">Brand: {{brand}}</p>
 
-                            <h3>{{name}}</h3>
-
+                          
                             <p class="product-code">
                                 Product Code: {{code}}
                             </p>
 
                             {{#if description}}
                                 <p class="product-description">
-                                    {{description}}
+                                   Description: {{description}}
                                 </p>
                             {{/if}}
 
                             <div class="product-meta">
                                 <span class="product-category">
-                                    {{category}}
+                                   Category: {{category}}
                                 </span>
                             </div>
 
                             <div class="product-footer">
 
                                 <div class="product-price">
-                                    {{formatPrice price}}
+                                   {{formatPrice price}}
                                 </div> 
 
                                 <span class="stock-status">
@@ -153,7 +152,9 @@
             </div>
 
         {{/if}}
+        </div>
 
     </div>
+
 
 </section>

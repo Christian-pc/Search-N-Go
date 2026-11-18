@@ -256,8 +256,11 @@ app.post('/admin/register', async (req, res) => {
 app.get('/admin', requireRole('admin'), (req, res) => res.render('admin-dashboard'));
 
 app.get('/profile', requireLogin, async (req, res) => {
-    const products = await productRepo.findAll();
-    return res.render('profile', { products });
+    const [products, categories] = await Promise.all([
+        productRepo.findAll(),
+        productRepo.findCategories()
+    ]);
+    return res.render('profile', { products, categories, term: '', categoryId: null });
 });
 app.use('/admin/products', requireRole('admin'), adminProductsRouter);
 
@@ -293,13 +296,14 @@ app.use((req, res) => {
 // Server error
 app.use((err, req, res, next) => {
     console.error(err);
-    res.status(500).render('error', { message: 'Something went wrong on the server.' });
+    const message = process.env.NODE_ENV === 'production'
+        ? 'Something went wrong on the server.'
+        : `Server error: ${err.message}`;
+    res.status(500).render('error', { message });
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Running at http://localhost:${PORT}`));
-
-
 
 
 
