@@ -1,13 +1,44 @@
-<header>
-    <a href="/">Search n' Go</a>
-    <nav>
-        {{#if user}}
-            {{#if (eq user.role 'store')}}<a href="/admin">Manage products</a>{{/if}}
-            <span>Hi, {{user.firstName}}</span>
-            <form action="/logout" method="post"><button>Log out</button></form>
-        {{else}}
-            <a href="/login">Log in</a>
-            <a href="/register">Create account</a>
-        {{/if}}
-    </nav>
+
+<header class="main-header">
+    <div class="header-container">
+
+       
+        <a href="/" class="brand-logo">
+            <i class="bi bi-bag-check-fill"></i>
+            <span>Search <strong>N' Go</strong></span>
+        </a>
+
+       
+        <nav class="header-nav">
+
+            {{#if user}}
+
+                {{#if (eq user.role 'store')}}
+                    <a href="/admin" class="nav-link">
+                        <i class="bi bi-box-seam"></i>
+                        Manage Products
+                    </a>
+                {{/if}}
+
+                <span class="user-greeting">
+                    <i class="bi bi-person-circle"></i>
+                    Hi, {{user.firstName}}
+                </span>
+
+                <form action="/logout" method="post">
+                    <button type="submit" class="logout-btn">
+                        Log Out
+                    </button>
+                </form>
+
+            {{else}}
+
+                <a href="/login" class="login-btn">
+                    Log In
+                </a>
+
+            {{/if}}
+
+        </nav>
+    </div>
 </header>

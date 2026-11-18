@@ -1,0 +1,349 @@
+
+
+<div class="product-editor container py-5">
+
+    <!-- Page Heading -->
+    <div class="editor-heading mb-4">
+
+        <div>
+            <span class="editor-label">
+                <i class="bi bi-grid me-1"></i>
+                PRODUCT MANAGEMENT
+            </span>
+
+            <h2>{{formTitle}}</h2>
+            <p>Manage your store products and inventory details.</p>
+        </div>
+
+        <a href="/admin/products" class="back-link">
+            <i class="bi bi-arrow-left"></i>
+            Back to Products
+        </a>
+
+    </div>
+
+    <!-- Error -->
+    {{#if error}}
+        <div class="alert alert-danger mb-4">
+            <i class="bi bi-exclamation-circle me-2"></i>
+            {{error}}
+        </div>
+    {{/if}}
+
+    <form action="{{action}}" method="post" enctype="multipart/form-data">
+
+        <div class="row g-4">
+
+            <!-- MAIN COLUMN -->
+            <div class="col-lg-8">
+
+                <!-- Product Information -->
+                <div class="editor-card mb-4">
+
+                    <div class="editor-card-header">
+                        <div class="section-icon">
+                            <i class="bi bi-box-seam"></i>
+                        </div>
+
+                        <div>
+                            <h5>General Information</h5>
+                            <p>Provide the basic details of your product.</p>
+                        </div>
+                    </div>
+
+                    <div class="editor-card-body">
+
+                        <div class="row g-4">
+
+                            <div class="col-md-6">
+                                <label for="name" class="editor-label">
+                                    Product Name <span>*</span>
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control editor-input"
+                                    id="name"
+                                    name="name"
+                                    maxlength="150"
+                                    required
+                                    value="{{product.name}}"
+                                    placeholder="Enter product name">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="code" class="editor-label">
+                                    Product Code <span>*</span>
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control editor-input"
+                                    id="code"
+                                    name="code"
+                                    maxlength="50"
+                                    required
+                                    value="{{product.code}}"
+                                    placeholder="e.g. PROD-001">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="brand" class="editor-label">
+                                    Brand <span>*</span>
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control editor-input"
+                                    id="brand"
+                                    name="brand"
+                                    maxlength="100"
+                                    required
+                                    value="{{product.brand}}"
+                                    placeholder="Enter brand name">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="categoryId" class="editor-label">
+                                    Category <span>*</span>
+                                </label>
+
+                                <select
+                                    class="form-select editor-input"
+                                    id="categoryId"
+                                    name="categoryId"
+                                    required>
+
+                                    <option value="">Select category</option>
+
+                                    {{#each categories}}
+                                        <option value="{{id}}" {{#if (eq id ../product.categoryId)}}selected{{/if}}>
+                                            {{name}}
+                                        </option>
+                                    {{/each}}
+
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="description" class="editor-label">
+                                    Description
+                                </label>
+
+                                <textarea
+                                    class="form-control editor-input"
+                                    id="description"
+                                    name="description"
+                                    rows="5"
+                                    placeholder="Write a detailed description of your product...">{{product.description}}</textarea>
+
+                                <div class="editor-help">
+                                    Add useful information about the product to help customers.
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Product Image -->
+                <div class="editor-card">
+
+                    <div class="editor-card-header">
+                        <div class="section-icon">
+                            <i class="bi bi-image"></i>
+                        </div>
+
+                        <div>
+                            <h5>Product Media</h5>
+                            <p>Upload an image to showcase your product.</p>
+                        </div>
+                    </div>
+
+                    <div class="editor-card-body">
+
+                        <label for="image" class="editor-label">
+                            Product Image
+                        </label>
+
+                        <div class="upload-area">
+
+                            <div class="upload-icon">
+                                <i class="bi bi-cloud-arrow-up"></i>
+                            </div>
+
+                            <div class="upload-content">
+                                <h6>Select a product image</h6>
+                                <p>Choose an image from your computer.</p>
+                                <span>JPG, PNG or WEBP</span>
+                            </div>
+
+                            <input
+                                type="file"
+                                id="image"
+                                name="image"
+                                class="form-control"
+                                accept="image/jpeg,image/png,image/webp">
+
+                        </div>
+
+                        {{#if product.imageUrl}}
+                            <div class="existing-image mt-4">
+
+                                <div>
+                                    <span class="image-status">
+                                        <i class="bi bi-check-circle-fill"></i>
+                                        CURRENT IMAGE
+                                    </span>
+
+                                    <p class="text-muted small mt-2 mb-0">
+                                        Upload a new image to replace the existing one.
+                                    </p>
+                                </div>
+
+                                <img
+                                    src="{{product.imageUrl}}"
+                                    alt="{{product.name}}">
+
+                            </div>
+                        {{/if}}
+
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- SIDEBAR -->
+            <div class="col-lg-4">
+
+                <!-- Pricing -->
+                <div class="editor-card mb-4">
+
+                    <div class="editor-card-header">
+                        <div class="section-icon">
+                            <i class="bi bi-currency-dollar"></i>
+                        </div>
+
+                        <div>
+                            <h5>Pricing</h5>
+                            <p>Set your product price.</p>
+                        </div>
+                    </div>
+
+                    <div class="editor-card-body">
+
+                        <label for="price" class="editor-label">
+                            Product Price <span>*</span>
+                        </label>
+
+                        <div class="input-group price-group">
+                            <span class="input-group-text">$</span>
+
+                            <input
+                                type="number"
+                                class="form-control editor-input"
+                                id="price"
+                                name="price"
+                                min="0"
+                                max="99999999.99"
+                                step="0.01"
+                                required
+                                value="{{product.price}}"
+                                placeholder="0.00">
+
+                            <span class="input-group-text">CAD</span>
+                        </div>
+
+                        <div class="editor-help">
+                            Enter the selling price in Canadian dollars.
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Inventory -->
+                <div class="editor-card mb-4">
+
+                    <div class="editor-card-header">
+                        <div class="section-icon">
+                            <i class="bi bi-boxes"></i>
+                        </div>
+
+                        <div>
+                            <h5>Inventory</h5>
+                            <p>Manage product availability.</p>
+                        </div>
+                    </div>
+
+                    <div class="editor-card-body">
+
+                        <label for="quantity" class="editor-label">
+                            Stock Quantity <span>*</span>
+                        </label>
+
+                        <input
+                            type="number"
+                            class="form-control editor-input"
+                            id="quantity"
+                            name="quantity"
+                            min="0"
+                            max="2147483647"
+                            step="1"
+                            required
+                            value="{{product.quantity}}"
+                            placeholder="Enter stock quantity">
+
+                        <div class="editor-help">
+                            Specify how many units are available.
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Reminder -->
+                <div class="editor-note">
+                    <div class="note-icon">
+                        <i class="bi bi-lightbulb"></i>
+                    </div>
+
+                    <div>
+                        <h6>Product Tip</h6>
+                        <p>
+                            Use a clear product image and accurate details
+                            to provide customers with a better shopping experience.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ACTION FOOTER -->
+        <div class="editor-footer mt-4">
+
+            <span>
+                <i class="bi bi-shield-check me-1"></i>
+                Make sure all required fields are completed.
+            </span>
+
+            <div class="d-flex gap-2">
+                <a href="/admin/products" class="btn cancel-btn">
+                    Cancel
+                </a>
+
+                <button type="submit" class="btn save-product-btn">
+                    <i class="bi bi-check-lg me-2"></i>
+                    Save Product
+                </button>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+

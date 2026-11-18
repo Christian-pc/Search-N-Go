@@ -1,21 +1,182 @@
-<h1>Your profile</h1>
-<p>Name: {{user.firstName}}</p>
-<p>Role: {{user.role}}</p>
 
-<h2>Products</h2>
-{{#if products.length}}
-    <ul>
-        {{#each products}}
-            <li>
-                {{#if imageUrl}}<img src="{{imageUrl}}" alt="{{name}}" width="120">{{/if}}
-                <h3>{{name}}</h3>
-                <p>Code: {{code}}</p>
-                <p>Brand: {{brand}} | Category: {{category}}</p>
-                {{#if description}}<p>{{description}}</p>{{/if}}
-                <p>{{formatPrice price}} | {{stockText quantity}}</p>
-            </li>
-        {{/each}}
-    </ul>
-{{else}}
-    <p>No products are available yet.</p>
-{{/if}}
+<div class="container mb-4">
+
+    <div class="card border-0 shadow-sm profile-card">
+
+        <div class="card-body p-4">
+
+            <div class="d-flex align-items-center gap-3 mb-3">
+
+                <div class="profile-avatar">
+                    <i class="bi bi-person-fill"></i>
+                </div>
+
+                <div>
+                    <h5 class="fw-bold text-dark mb-1">
+                        Your Profile
+                    </h5>
+
+                    <p class="text-muted small mb-0">
+                        View your account information.
+                    </p>
+                </div>
+
+            </div>
+
+            <hr class="my-3">
+
+            <div class="row g-3">
+
+                <div class="col-md-6">
+                    <span class="text-muted small d-block mb-1">
+                        Full Name
+                    </span>
+
+                    <span class="fw-semibold text-dark">
+                        {{user.firstName}}
+                    </span>
+                </div>
+
+             
+
+                   
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<section class="product-page">
+
+ 
+    <div class="product-heading">
+        <div>
+            <h1>Find Your Products</h1>
+            <p>Browse products and check their prices and availability in store.</p>
+        </div>
+    </div>
+
+    
+    <form action="/products" method="GET" class="product-search">
+
+        <div class="search-input">
+            <i class="bi bi-search"></i>
+            <input
+                type="search"
+                name="q"
+                value="{{term}}"
+                placeholder="Search by product name, brand or code..."
+                aria-label="Search products">
+        </div>
+
+        <div class="category-select">
+            <i class="bi bi-grid"></i>
+            <select name="category" aria-label="Filter by category">
+                <option value="">All Categories</option>
+
+                {{#each categories}}
+                    <option value="{{id}}"
+                        {{#if (eq id ../categoryId)}}selected{{/if}}>
+                        {{name}}
+                    </option>
+                {{/each}}
+            </select>
+        </div>
+
+       
+
+    </form>
+
+  
+    <div class="product-section">
+
+        <div class="product-section-heading">
+            <h2>Our Products</h2>
+            <span>{{products.length}} products</span>
+        </div>
+
+        {{#if products.length}}
+
+            <div class="product-grid">
+
+                {{#each products}}
+
+                    <article class="product-card">
+
+                        <div class="product-image">
+                            {{#if imageUrl}}
+                                <img src="{{imageUrl}}" alt="{{name}}" loading="lazy">
+                            {{else}}
+                                <div class="image-placeholder">
+                                    <i class="bi bi-image"></i>
+                                    <span>No Image Available</span>
+                                </div>
+                            {{/if}}
+                        </div>
+
+                        <div class="product-details">
+
+                            <p class="product-brand">{{brand}}</p>
+
+                            <h3>{{name}}</h3>
+
+                            <p class="product-code">
+                                Product Code: {{code}}
+                            </p>
+
+                            {{#if description}}
+                                <p class="product-description">
+                                    {{description}}
+                                </p>
+                            {{/if}}
+
+                            <div class="product-meta">
+                                <span class="product-category">
+                                    {{category}}
+                                </span>
+                            </div>
+
+                            <div class="product-footer">
+
+                                <div class="product-price">
+                                    {{formatPrice price}}
+                                </div> 
+
+                                <span class="stock-status">
+                                    {{stockText quantity}}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                {{/each}}
+
+            </div>
+
+        {{else}}
+
+            <div class="empty-products">
+              
+                <h3>No products found</h3>
+                <p>
+                    {{#if term}}
+                        We couldn't find any products matching "{{term}}".
+                        Try another search.
+                    {{else}}
+                        There are currently no products available.
+                    {{/if}}
+                </p>
+            </div>
+
+        {{/if}}
+
+    </div>
+
+</section>

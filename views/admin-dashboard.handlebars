@@ -1,5 +1,79 @@
 
- <h1>Admin dashboard</h1>
- <p>Welcome, {{user.firstName}}.</p>
- <p>Admin access is active.</p>
- <p><a href="/admin/products">Manage products</a></p>
+<div class="container admin-dashboard py-5">
+
+    <!-- Welcome Section -->
+    <div class="dashboard-welcome mb-4">
+
+        <div>
+            <span class="dashboard-label">ADMINISTRATION</span>
+
+            <h2>Welcome back, {{user.firstName}}!</h2>
+
+            <p>
+                Manage your store and keep your product inventory up to date.
+            </p>
+        </div>
+
+        <div class="admin-status">
+            <span class="status-dot"></span>
+            Admin Access Active
+        </div>
+
+    </div>
+
+   
+    <div class="row g-4">
+
+    
+        <div class="col-md-6 col-lg-4">
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-icon">
+                    <i class="bi bi-box-seam"></i>
+                </div>
+
+                <h5>Manage Products</h5>
+
+                <p>
+                    View, add, edit and manage products in your store.
+                </p>
+
+                <a href="/admin/products" class="dashboard-link">
+                    View Products
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+      
+        <div class="col-md-6 col-lg-4">
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-icon">
+                    <i class="bi bi-plus-square"></i>
+                </div>
+
+                <h5>Add New Product</h5>
+
+                <p>
+                    Add new products to your store inventory.
+                </p>
+
+                <a href="/admin/products/new" class="dashboard-link">
+                    Add Product
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+

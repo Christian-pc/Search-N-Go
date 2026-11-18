@@ -1,44 +1,160 @@
-<h1>Manage products</h1>
-<p><a href="/admin/products/new">Add product</a></p>
 
-{{#if message}}
-    <p role="status">{{message}}</p>
-{{/if}}
+<div class="container inventory-page py-5">
 
-{{#if products.length}}
-    <table>
-        <thead>
-            <tr>
-                <th scope="col">Code</th>
-                <th scope="col">Product</th>
-                <th scope="col">Brand</th>
-                <th scope="col">Category</th>
-                <th scope="col">Price</th>
-                <th scope="col">Stock</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each products}}
-                <tr>
-                    <td>{{code}}</td>
-                    <td>{{name}}</td>
-                    <td>{{brand}}</td>
-                    <td>{{category}}</td>
-                    <td>{{formatPrice price}}</td>
-                    <td>{{quantity}}</td>
-                    <td>
-                        <a href="/admin/products/{{id}}/edit">Edit</a>
-                        <form action="/admin/products/{{id}}/delete" method="post">
-                            <button type="submit">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            {{/each}}
-        </tbody>
-    </table>
-{{else}}
-    <p>No products yet.</p>
-{{/if}}
+  
+    <div class="inventory-heading mb-4">
 
-<p><a href="/admin">Back to dashboard</a></p>
+        <div>
+            <h2>Products</h2>
+            <p>Manage your store products and inventory.</p>
+        </div>
+
+        <a href="/admin/products/new" class="btn btn-primary add-product-btn">
+            <i class="bi bi-plus-lg me-2"></i>
+            Add Product
+        </a>
+
+    </div>
+
+    <!-- Success Message -->
+    {{#if message}}
+        <div class="alert alert-success py-2 mb-4" role="status">
+            <i class="bi bi-check-circle me-2"></i>
+            {{message}}
+        </div>
+    {{/if}}
+
+    
+    <div class="inventory-card">
+
+        <div class="inventory-card-header">
+            <h5>All Products</h5>
+            <span>{{products.length}} products</span>
+        </div>
+
+        {{#if products.length}}
+
+            <div class="table-responsive">
+
+                <table class="table inventory-table mb-0">
+
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Brand</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Inventory</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {{#each products}}
+                            <tr>
+
+                                <td>
+                                    <div class="product-cell">
+
+                                        {{#if imageUrl}}
+                                            <img
+                                                src="{{imageUrl}}"
+                                                alt="{{name}}"
+                                                class="product-image">
+                                        {{else}}
+                                            <div class="product-image-placeholder">
+                                                <i class="bi bi-image"></i>
+                                            </div>
+                                        {{/if}}
+
+                                        <div class="product-details">
+                                            <span class="product-name">{{name}}</span>
+                                            <span class="product-code">{{code}}</span>
+                                        </div>
+
+                                    </div>
+                                </td>
+
+                                <td>{{brand}}</td>
+
+                                <td>{{category}}</td>
+
+                                <td class="price-column">
+                                    {{formatPrice price}}
+                                </td>
+
+                                <td>
+                                    {{#if quantity}}
+                                        <span class="stock-status available">
+                                            <span class="stock-dot"></span>
+                                            {{quantity}} available
+                                        </span>
+                                    {{else}}
+                                        <span class="stock-status unavailable">
+                                            <span class="stock-dot"></span>
+                                            Out of stock
+                                        </span>
+                                    {{/if}}
+                                </td>
+
+                                <td>
+                                    <div class="product-actions">
+
+                                        <a
+                                            href="/admin/products/{{id}}/edit"
+                                            class="action-button edit-action"
+                                            title="Edit product"
+                                            aria-label="Edit product">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+
+                                        <form
+                                            action="/admin/products/{{id}}/delete"
+                                            method="post"
+                                            onsubmit="return confirm('Are you sure you want to delete this product?')">
+
+                                            <button
+                                                type="submit"
+                                                class="action-button delete-action"
+                                                title="Delete product"
+                                                aria-label="Delete product">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+                                </td>
+
+                            </tr>
+                        {{/each}}
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        {{else}}
+
+            <div class="empty-inventory">
+
+                <i class="bi bi-box-seam"></i>
+
+                <h5>No products found</h5>
+
+                <p>
+                    You haven't added any products to your store yet.
+                </p>
+
+                <a href="/admin/products/new" class="btn btn-secondary">
+                    Add Your First Product
+                </a>
+
+            </div>
+
+        {{/if}}
+
+    </div>
+
+</div>
+
