@@ -1,43 +1,16 @@
 
-
-<!--
-<section class="hero">
-    <h1>Search N' Go</h1>
-    <p>Check price and availability in store.</p>
-    <form class="search-form" action="/" method="get">
-        <input type="search" name="q" value="{{q}}" placeholder="Product name or code" aria-label="Search products">
-        <button>Search</button>
-    </form>
-</section>
-
-{{#if searched}}
-    <section class="results">
-        <h2>{{products.length}} result(s) for "{{q}}"</h2>
-        {{#if products.length}}
-            <div class="product-grid">
-                {{#each products}}
-                    {{> productCard}}
-                {{/each}}
-            </div>
-        {{else}}
-            <p class="empty">No products found. Try a different name or code.</p>
-        {{/if}}
-    </section>
-{{/if}}
-
-
--->
 <section class="product-page">
 
-  
+    <!-- Page heading -->
     <div class="product-heading">
-        <div>
+        <div class="product-heading-content">
+            <span class="product-eyebrow">SHOP & DISCOVER</span>
             <h1>Find Your Products</h1>
-            <p>Browse products and check their prices and availability in store.</p>
+            <p>Explore our collection and check in-store prices and availability.</p>
         </div>
     </div>
 
-   
+    <!-- Search and filter -->
     <form action="/products" method="GET" class="product-search" data-live-search>
 
         <div class="search-input">
@@ -46,7 +19,7 @@
                 type="search"
                 name="q"
                 value="{{term}}"
-                placeholder="Search by product name..."
+                placeholder="Search products or brands..."
                 aria-label="Search products">
         </div>
 
@@ -66,95 +39,105 @@
 
     </form>
 
-  
+    <!-- Product listing -->
     <div class="product-section">
 
         <div class="product-section-heading">
-            <h2>Our Products</h2>
-            <span data-product-count>{{products.length}} products</span>
+            <div>
+                <h2>Explore Our Products</h2>
+                <p>Find the right product for your needs.</p>
+            </div>
+
+            <span class="product-count" data-product-count>
+                {{products.length}} products
+            </span>
         </div>
 
         <div data-product-list aria-live="polite">
-        {{#if products.length}}
 
-            <div class="product-grid">
+            {{#if products.length}}
 
-                {{#each products}}
+                <div class="product-grid">
 
-                    <article class="product-card">
+                    {{#each products}}
 
-                        <div class="product-image">
-                            {{#if imageUrl}}
-                                <img src="{{imageUrl}}" alt="{{name}}" loading="lazy">
-                            {{else}}
-                                <div class="image-placeholder">
-                                    <i class="bi bi-image"></i>
-                                    <span>No Image Available</span>
-                                </div>
-                            {{/if}}
-                        </div>
+                        <article class="product-card">
 
-                        <div class="product-details">
-                                <h3>Name: {{name}}</h3>
+                            <div class="product-image">
+                                {{#if imageUrl}}
+                                    <img src="{{imageUrl}}" alt="{{name}}" loading="lazy">
+                                {{else}}
+                                    <div class="image-placeholder">
+                                        <i class="bi bi-image"></i>
+                                        <span>No image available</span>
+                                    </div>
+                                {{/if}}
+                            </div>
 
-                            <p class="product-brand">Brand: {{brand}}</p>
+                            <div class="product-details">
 
-                          
-                            <p class="product-code">
-                                Product Code: {{code}}
-                            </p>
 
-                            {{#if description}}
-                                <p class="product-description">
-                                   Description: {{description}}
+                                <h3>{{name}}</h3>
+
+                                <p class="product-brand">
+                                    {{brand}}
                                 </p>
-                            {{/if}}
+                                
+                               
 
-                            <div class="product-meta">
-                                <span class="product-category">
-                                   Category: {{category}}
-                                </span>
+                                <p class="product-code">
+                                    <span>Product code:</span> {{code}}
+                                </p>
+
+                                {{#if description}}
+                                    <p class="product-description">
+                                        {{description}}
+                                    </p>
+                                {{/if}}
+
+                                <div class="product-footer">
+
+                                    <div class="product-price">
+                                        {{formatPrice price}}
+                                    </div>
+
+                                    <span class="stock-status">
+                                        {{stockText quantity}}
+                                    </span>
+
+                                </div>
+
                             </div>
 
-                            <div class="product-footer">
+                        </article>
 
-                                <div class="product-price">
-                                   {{formatPrice price}}
-                                </div> 
+                    {{/each}}
 
-                                <span class="stock-status">
-                                    {{stockText quantity}}
-                                </span>
+                </div>
 
-                            </div>
+            {{else}}
 
-                        </div>
+                <div class="empty-products">
+                    <div class="empty-products-icon">
+                        <i class="bi bi-search"></i>
+                    </div>
 
-                    </article>
+                    <h3>No products found</h3>
 
-                {{/each}}
+                    <p>
+                        {{#if term}}
+                            We couldn't find any products matching "{{term}}".
+                            Try another search.
+                        {{else}}
+                            There are currently no products available.
+                        {{/if}}
+                    </p>
+                </div>
 
-            </div>
+            {{/if}}
 
-        {{else}}
-
-            <div class="empty-products">
-              
-                <h3>No products found</h3>
-                <p>
-                    {{#if term}}
-                        We couldn't find any products matching "{{term}}".
-                        Try another search.
-                    {{else}}
-                        There are currently no products available.
-                    {{/if}}
-                </p>
-            </div>
-
-        {{/if}}
         </div>
 
     </div>
-
 
 </section>

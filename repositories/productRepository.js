@@ -16,32 +16,6 @@ async function findAll() {
     return rows;
 }
 
-async function search({ term = '', categoryId = null } = {}) {
-    const conditions = [];
-    const params = [];
-
-    if (term) {
-        conditions.push('p.ProductName LIKE ?');
-        params.push(`${term}%`);
-    }
-    if (categoryId !== null) {
-        conditions.push('p.CategoryId = ?');
-        params.push(categoryId);
-    }
-
-    const where = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
-    const [rows] = await pool.execute(
-        `SELECT ${PRODUCT_COLUMNS}, c.CategoryName AS category
-         FROM Products p
-         JOIN Categories c ON c.CategoryId = p.CategoryId
-         LEFT JOIN Inventory i ON i.ProductId = p.ProductId
-         ${where}
-         ORDER BY p.ProductId DESC`,
-        params
-    );
-    return rows;
-}
-
 async function findById(id) {
     const [rows] = await pool.execute(
         `SELECT ${PRODUCT_COLUMNS}
@@ -58,13 +32,6 @@ async function findCategories() {
         'SELECT CategoryId AS id, CategoryName AS name FROM Categories ORDER BY CategoryName'
     );
     return rows;
-}
-
-async function saveSearch(userId, term) {
-    await pool.execute(
-        'INSERT INTO SearchHistory (UserId, SearchTerm) VALUES (?, ?)',
-        [userId, term]
-    );
 }
 
 // Products and Inventory are separate tables, so write both or neither
@@ -84,6 +51,7 @@ async function inTransaction(work) {
 }
 
 // Returns the new product id. Database errors (like ER_DUP_ENTRY) are passed up to the caller.
+
 async function create(p) {
     return inTransaction(async conn => {
         const [result] = await conn.execute(
@@ -140,14 +108,6 @@ async function createCategory(name) {
     return result.insertId;
 }
 
-module.exports = {
-    findAll,
-    search,
-    findById,
-    findCategories,
-    saveSearch,
-    createCategory,
-    create,
-    update,
-    remove
-};
+module.exports = { findAll, findById, findCategories, createCategory, create, update, remove };
+
+

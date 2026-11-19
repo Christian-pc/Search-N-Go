@@ -555,7 +555,7 @@ home page
 }
 
 .product-details h3 {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
    
     margin-bottom: 8px;
@@ -567,20 +567,28 @@ home page
     margin-bottom: 10px;
     font-weight: 700;
 }
-
 .product-description {
-    
-    
-    font-size: 12px;
-    margin-bottom: 10px;
-    font-weight: 700;
+    color: #64748b;
+    font-size: 0.75rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
+
 .product-category {
-  
-    font-size: 12px;
-    margin-bottom: 10px;
-    font-weight: 700;
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #475569;
+    background: #f1f5f9;
+    padding: 5px 10px;
+    border-radius: 6px;
+    margin-bottom: 12px;
 }
 
 /* Price and Stock */
@@ -1332,38 +1340,53 @@ home page
     color: #94a3b8;
     font-size: 11px;
 }
-
 .cancel-btn {
-    padding: 10px 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+   
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
     background: #ffffff;
-    border: 1px solid #dce3eb;
-    color: #475569;
-    border-radius: 7px;
-    font-size: 13px;
+    color: #374151;
     font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
 }
 
 .cancel-btn:hover {
-    background: #f8fafc;
-    border-color: #cbd5e1;
-    color: #1e293b;
+    background: #f3f4f6;
+    border-color: #9ca3af;
+    color: #111827;
 }
 
+
+
 .save-product-btn {
-    padding: 10px 21px;
-    background: #2563eb;
-    border: 1px solid #2563eb;
-    color: white;
-    border-radius: 7px;
-    font-size: 13px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 11px 24px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #FFFFFF;
+    color: #000;
     font-weight: 600;
-    transition: 0.2s;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
 }
 
 .save-product-btn:hover {
-    background: #1d4ed8;
-    color: white;
-    border-color: #1d4ed8;
+    background: #f3f4f6;
+    border-color: #9ca3af;
+    color: #111827;
+}
+
+
+
+.save-product-btn:active {
+    transform: translateY(0);
 }
 
 /* ================================

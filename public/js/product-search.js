@@ -29,8 +29,10 @@ function makeProductCard(product) {
 
     const details = makeElement('div', 'product-details');
     details.append(
+        
+        makeElement('h3', 'product-name', product.name || ''),
         makeElement('p', 'product-brand', product.brand || ''),
-        makeElement('h3', '', product.name || ''),
+      
         makeElement('p', 'product-code', `Product Code: ${product.code || ''}`)
     );
 
@@ -38,9 +40,7 @@ function makeProductCard(product) {
         details.append(makeElement('p', 'product-description', product.description));
     }
 
-    const meta = makeElement('div', 'product-meta');
-    meta.append(makeElement('span', 'product-category', product.category || ''));
-    details.append(meta);
+    
 
     const footer = makeElement('div', 'product-footer');
     const price = Number(product.price);
