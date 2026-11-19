@@ -18,13 +18,35 @@ async function findAll() {
 
 async function findById(id) {
     const [rows] = await pool.execute(
-        `SELECT ${PRODUCT_COLUMNS}
+        `SELECT ${PRODUCT_COLUMNS}, c.CategoryName AS category
          FROM Products p
+         JOIN Categories c ON c.CategoryId = p.CategoryId
          LEFT JOIN Inventory i ON i.ProductId = p.ProductId
          WHERE p.ProductId = ?`,
         [id]
     );
     return rows[0];
+}
+
+async function findReviewsForProduct(productId) {
+    const [rows] = await pool.execute(
+        `SELECT r.Rating, r.ReviewText, u.FirstName,
+                DATE_FORMAT(r.ReviewDate, '%Y-%m-%d') AS ReviewDate
+         FROM ProductReviews r
+         JOIN Users u ON u.UserId = r.UserId
+         WHERE r.ProductId = ?
+         ORDER BY r.ReviewDate DESC`,
+        [productId]
+    );
+    return rows;
+}
+
+async function createReview({ productId, userId, rating, reviewText }) {
+    const [result] = await pool.execute(
+        'INSERT INTO ProductReviews (ProductId, UserId, Rating, ReviewText) VALUES (?, ?, ?, ?)',
+        [productId, userId, rating, reviewText || null]
+    );
+    return result.insertId;
 }
 
 async function findCategories() {
@@ -108,6 +130,14 @@ async function createCategory(name) {
     return result.insertId;
 }
 
-module.exports = { findAll, findById, findCategories, createCategory, create, update, remove };
-
-
+module.exports = {
+    findAll,
+    findById,
+    findReviewsForProduct,
+    createReview,
+    findCategories,
+    createCategory,
+    create,
+    update,
+    remove
+};

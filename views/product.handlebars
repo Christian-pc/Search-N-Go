@@ -1,0 +1,77 @@
+<section class="product-page">
+    <p><a href="/" class="Goback">&larr; Back to products</a></p>
+
+    <article class="product-detail">
+        <div class="product-detail-image">
+            {{#if product.imageUrl}}
+                <img src="{{product.imageUrl}}" alt="{{product.name}}">
+            {{else}}
+                <div class="image-placeholder">
+                    <i class="bi bi-image"></i>
+                    <span>No Image Available</span>
+                </div>
+            {{/if}}
+        </div>
+
+        <div class="product-detail-info">
+            <p class="product-brand">{{product.brand}}</p>
+            <h1>{{product.name}}</h1>
+            <p class="product-code">Product Code: {{product.code}}</p>
+            {{#if product.description}}
+                <p>{{product.description}}</p>
+            {{/if}}
+            <p>Category: {{product.category}}</p>
+            <p class="product-detail-price">{{formatPrice product.price}}</p>
+            <p class="stock-status">{{stockText product.quantity}}</p>
+
+            <section class="reviews" id="reviews" aria-labelledby="reviews-heading">
+                <h2 id="reviews-heading">Customer Reviews</h2>
+                {{#if reviewSubmitted}}
+                    <p role="status">Your review was submitted.</p>
+                {{/if}}
+                {{#if avgRating}}
+                    <p class="avg-rating">Average rating: {{avgRating}} / 5 ({{reviews.length}} reviews)</p>
+                {{else}}
+                    <p class="avg-rating">No ratings yet.</p>
+                {{/if}}
+
+                {{#if reviews.length}}
+                    {{#each reviews}}
+                        <article class="review">
+                            <p class="review-stars">{{Rating}} / 5</p>
+                            {{#if ReviewText}}
+                                <p>{{ReviewText}}</p>
+                            {{/if}}
+                            <p class="review-meta">{{FirstName}} &middot; {{ReviewDate}}</p>
+                        </article>
+                    {{/each}}
+                {{else}}
+                    <p class="empty">No reviews yet.</p>
+                {{/if}}
+
+                {{#if (eq user.role "customer")}}
+                    <form action="/products/{{product.id}}/reviews" method="POST" class="review-form">
+                        <h3>Leave a review</h3>
+                        {{#if reviewError}}
+                            <p role="alert">{{reviewError}}</p>
+                        {{/if}}
+                        <label for="review-rating">Rating</label>
+                        <select id="review-rating" name="rating" required>
+                            <option value="">Choose a rating</option>
+                            <option value="5" {{#if (eq reviewInput.rating "5")}}selected{{/if}}>5 - Excellent</option>
+                            <option value="4" {{#if (eq reviewInput.rating "4")}}selected{{/if}}>4 - Good</option>
+                            <option value="3" {{#if (eq reviewInput.rating "3")}}selected{{/if}}>3 - Okay</option>
+                            <option value="2" {{#if (eq reviewInput.rating "2")}}selected{{/if}}>2 - Poor</option>
+                            <option value="1" {{#if (eq reviewInput.rating "1")}}selected{{/if}}>1 - Very poor</option>
+                        </select>
+                        <label for="review-text">Review (optional)</label>
+                        <textarea id="review-text" style="width:100%" name="reviewText" rows="4" maxlength="16000">{{reviewInput.reviewText}}</textarea>
+                        <button type="submit">Submit review</button>
+                    </form>
+                {{else}}
+                    <p><a href="/login" class="SignAsCustomer">Sign in as a customer</a> to leave a review.</p>
+                {{/if}}
+            </section>
+        </div>
+    </article>
+</section>

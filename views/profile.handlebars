@@ -119,9 +119,8 @@
 
                         <div class="product-details">
 
-                            <p class="product-brand">
-                                 <h3>  {{name}}</h3>
-                                 {{brand}}</p>
+                            <h3><a href="/products/{{id}}">{{name}}</a></h3>
+                            <p class="product-brand">{{brand}}</p>
 
                            
                             <p class="product-code">
@@ -133,6 +132,8 @@
                                      {{description}}
                                 </p>
                             {{/if}}
+
+                          
 
                             <div class="product-meta">
                                 
@@ -149,6 +150,7 @@
                                 </span>
 
                             </div>
+                            <a class="review-link" href="/products/{{id}}#reviews">Reviews</a>
 
                         </div>
 

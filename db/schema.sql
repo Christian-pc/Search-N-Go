@@ -91,4 +91,22 @@ CREATE TABLE RefreshTokens (
         ON DELETE CASCADE
 );
 
-INSERT INTO Categories (CategoryName) VALUES ('Food'), ('Clothing'), ('Household'), ('Electronics');
+/* Reset the database to a clean state by deleting all products and categories, and resetting the auto-increment counters. */
+
+SET SQL_SAFE_UPDATES = 0;
+DELETE FROM searchngo.products;
+DELETE FROM searchngo.categories;
+ALTER TABLE searchngo.categories AUTO_INCREMENT = 1;
+SET SQL_SAFE_UPDATES = 1;
+
+INSERT INTO searchngo.categories (CategoryName) VALUES
+('Fashion & Apparel'),
+('Electronics & Gadgets'),
+('Home & Living'),
+('Health & Wellness'),
+('Sports & Outdoor'),
+('Toys & Games'),
+('Automotive'),
+('Pet Supplies'),
+('Arts & Crafts'),
+('Digital Product')

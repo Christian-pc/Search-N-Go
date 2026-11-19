@@ -39,7 +39,7 @@
 
     </form>
 
-    <!-- Product listing -->
+   
     <div class="product-section">
 
         <div class="product-section-heading">
@@ -76,8 +76,7 @@
 
                             <div class="product-details">
 
-
-                                <h3>{{name}}</h3>
+                                <h3><a href="/products/{{id}}">{{name}}</a></h3>
 
                                 <p class="product-brand">
                                     {{brand}}
@@ -95,7 +94,8 @@
                                     </p>
                                 {{/if}}
 
-                                <div class="product-footer">
+                             
+                                      <div class="product-footer">
 
                                     <div class="product-price">
                                         {{formatPrice price}}
@@ -106,6 +106,8 @@
                                     </span>
 
                                 </div>
+                                   <a class="review-link" href="/products/{{id}}#reviews"> Reviews</a>
+
 
                             </div>
 
@@ -139,5 +141,6 @@
         </div>
 
     </div>
+
 
 </section>

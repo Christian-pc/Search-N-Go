@@ -1,4 +1,4 @@
-/*product-search.js*/
+
 
 
 function makeElement(tag, className, text) {
@@ -28,11 +28,13 @@ function makeProductCard(product) {
     }
 
     const details = makeElement('div', 'product-details');
+    const title = makeElement('h3', 'product-name');
+    const titleLink = makeElement('a', '', product.name || '');
+    titleLink.href = `/products/${encodeURIComponent(product.id)}`;
+    title.append(titleLink);
     details.append(
-        
-        makeElement('h3', 'product-name', product.name || ''),
+        title,
         makeElement('p', 'product-brand', product.brand || ''),
-      
         makeElement('p', 'product-code', `Product Code: ${product.code || ''}`)
     );
 
@@ -40,7 +42,6 @@ function makeProductCard(product) {
         details.append(makeElement('p', 'product-description', product.description));
     }
 
-    
 
     const footer = makeElement('div', 'product-footer');
     const price = Number(product.price);
@@ -58,6 +59,11 @@ function makeProductCard(product) {
             : `In stock (${quantity})`;
     footer.append(makeElement('span', 'stock-status', stockText));
     details.append(footer);
+
+      
+    const reviewsLink = makeElement('a', 'review-link', 'Reviews');
+    reviewsLink.href = `/products/${encodeURIComponent(product.id)}#reviews`;
+    details.append(reviewsLink);
 
     card.append(imageContainer, details);
     return card;
