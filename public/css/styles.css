@@ -727,7 +727,7 @@ home page
 
 
 
-/* admin-products.handlebars */
+
 
 
 /* Inventory Page */
@@ -1091,9 +1091,9 @@ home page
     color: #2563eb;
 }
 
-/* ================================
+/* 
    EDITOR CARDS
-================================ */
+ */
 
 .editor-card {
     background: #ffffff;
@@ -1141,9 +1141,9 @@ home page
     padding: 24px;
 }
 
-/* ================================
+/*
    FORM INPUTS
-================================ */
+ */
 
 .product-editor .editor-input {
     min-height: 44px;
@@ -1178,9 +1178,9 @@ home page
     margin-top: 8px;
 }
 
-/* ================================
+/* 
    IMAGE UPLOAD
-================================ */
+*/
 
 .upload-area {
     padding: 22px;
@@ -1264,9 +1264,7 @@ home page
     padding: 5px;
 }
 
-/* ================================
-   PRICE INPUT
-================================ */
+/* PRICE INPUT */
 
 .price-group .input-group-text {
     background: #f8fafc;
@@ -1288,9 +1286,7 @@ home page
     border-radius: 0;
 }
 
-/* ================================
-   INFORMATION NOTE
-================================ */
+/* INFORMATION NOTE */
 
 .editor-note {
     display: flex;
@@ -1321,9 +1317,7 @@ home page
     margin: 0;
 }
 
-/* ================================
-   FORM FOOTER
-================================ */
+/* FORM FOOTER */
 
 .editor-footer {
     display: flex;
@@ -1389,9 +1383,7 @@ home page
     transform: translateY(0);
 }
 
-/* ================================
-   RESPONSIVE
-================================ */
+
 
 @media (max-width: 767px) {
 
@@ -1605,9 +1597,7 @@ home page
     gap: 20px;
 }
 
-/* ==============================
-   BRAND LOGO
-============================== */
+
 
 .brand-logo {
     display: flex;
@@ -1640,9 +1630,7 @@ home page
     transform: translateY(-2px);
 }
 
-/* ==============================
-   HEADER NAVIGATION
-============================== */
+
 
 .header-nav {
     display: flex;
@@ -1681,9 +1669,7 @@ home page
     color: #2563eb;
 }
 
-/* ==============================
-   USER GREETING
-============================== */
+
 
 .user-greeting {
     display: flex;
@@ -1701,9 +1687,8 @@ home page
     font-size: 19px;
 }
 
-/* ==============================
-   LOGIN BUTTON
-============================== */
+/*   LOGIN BUTTON  */
+
 
 .login-btn {
     display: inline-flex;
@@ -1736,9 +1721,7 @@ home page
     top: -8px;
 }
 
-/* ==============================
-   LOGOUT BUTTON
-============================== */
+/*LOGOUT BUTTON */
 
 .logout-btn {
     padding: 9px 17px;
@@ -1769,9 +1752,9 @@ home page
     outline-offset: 3px;
 }
 
-/* ==============================
+/* 
    RESPONSIVE DESIGN
-============================== */
+ */
 
 @media (max-width: 600px) {
 
